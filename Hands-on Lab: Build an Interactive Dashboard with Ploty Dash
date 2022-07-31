@@ -22,7 +22,7 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 # The default select value is for ALL sites
                                 # dcc.Dropdown(id='site-dropdown',...)
                                 html.Br(),
-  dcc.Dropdown(id='site-dropdown',
+dcc.Dropdown(id='site-dropdown',
                 options=[
                     {'label': 'All Sites', 'value': 'ALL'},
                     {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'},
@@ -36,22 +36,21 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                 ),
                                 # TASK 2: Add a pie chart to show the total successful launches count for all sites
                                 # If a specific launch site was selected, show the Success vs. Failed counts for the site
-                                html.Div(dcc.Graph(id='success-pie-chart')),
-                                html.Br(),
+                                 html.Div(dcc.Graph(id='success-pie-chart')),
+                                 html.Br(),
 
-                                html.P("Payload range (Kg):"),
                                 # TASK 3: Add a slider to select payload range
                                 #dcc.RangeSlider(id='payload-slider',...)
+#dcc.RangeSlider(id='payload-slider',...)
                                 dcc.RangeSlider(id='payload-slider',
                                 min=0, max=10000, step=1000,
                                 marks={0: '0',
                                 100: '100'},
                                 value=[min_payload, max_payload])
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
-                                html.Div(dcc.Graph(id='success-payload-scatter-chart')),
-                                [Input(component_id='site-dropdown', component_property='value'), 
-                                Input(component_id="payload-slider", component_property="value")]
-                                Output(component_id='success-payload-scatter-chart', component_property='figure')])
+                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
+                                ])
+
 # TASK 2:
 # Add a callback function for `site-dropdown` as input, `success-pie-chart` as output
 # Function decorator to specify function input and output
@@ -80,6 +79,7 @@ def scatter(entered_site,payload):
     else:
         fig=px.scatter(filtered_df[filtered_df['Launch Site']==entered_site],x='Payload Mass (kg)',y='class',color='Booster Version Category',title=f"Success count on Payload mass for site {entered_site}")
         return fig
+
 
 # Run the app
 if __name__ == '__main__':
